@@ -5,21 +5,21 @@ import axios from 'axios';
 const Person = (props) => {
     const navigate = useNavigate();
 
-    const { urlVar, num } = useParams()
+    const { urlVar} = useParams()
 
     const [person, setPerson] = useState(null)
 
 
     useEffect(() => {
-        axios.get("https://swapi.dev/api/people/${urlVar}/")
+        axios.get(`https://swapi.dev/api/people/${urlVar}`)
             .then(res => {
                 console.log(res.data);
                 setPerson(res.data);
             })
             .catch(err => {
-                
+
                 console.log(err)
-                navigate("/error") 
+                navigate("/error")
 
             })
 
@@ -32,16 +32,18 @@ const Person = (props) => {
                 person ? (
                     <div>
                         <h3>Person </h3>
-                        url: <p>{urlVar},{num}</p>
+                        url: <p>{urlVar}</p>
                         <hr />
                         {JSON.stringify(person)}
 
-                        {/*  */}
-                        <h4>{person.name}</h4>
-                        <p>{person.height}</p>
-                        <p>{person.eye_color}</p>
-                        <p>{person.gender}</p>
-                        {/*  */}
+                        <div>
+                            {/*  */}
+                            <h4>{person.name}</h4>
+                            <p>{person.height}</p>
+                            <p>{person.eye_color}</p>
+                            <p>{person.gender}</p>
+                            {/*  */}
+                        </div>
                     </div>
                 ) : <p>"loading"</p>
             }

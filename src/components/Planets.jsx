@@ -1,41 +1,50 @@
 import React, { useState, useEffect } from "react";
-import { Link,useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
 
 const Planets = (props) => {
-    const {urlVar,num} = useParams()
+    const { urlVar } = useParams()
+    console.log(urlVar);
 
-    const [planets, setPlanets] = useState(null);
+    const [planet, setPlanet] = useState(null);
 
     useEffect(() => {
-        axios.get("https://swapi.dev/api/planets/${urlVar}/")
-        .then(res => {
-            console.log(res.data);
-            setPlanets(res.data);
-        })
-        .catch(err => console.log(err))
+        axios.get(`https://swapi.dev/api/planets/${urlVar}`)
+            .then(res => {
+                console.log(res.data);
+                setPlanet(res.data);
+            })
+            .catch(err => console.log(err))
 
-    },[])
+    }, [])
 
     return (
         <div>
-            <h3>This will render the Planets component</h3>
+            {/* {/* <h3>This will render the Planets component</h3> */}
             <br />
-            <hr />
             <Link to={"/"}>
                 <button>Home</button>
             </Link>
             <br />
-            <hr />
-            {JSON.stringify(planets)}
+            <hr /> 
+            {/* {JSON.stringify(planet)} */}
 
             {/*  */}
-            <h4>{planets.name}</h4>
-            <p>{planets.rotation_period}</p>
-            <p>{planets.climate}</p>
-            <p>{planets.terrain}</p>
-            {/*  */}
+            {
+                planet ? (
+                    <div>
+
+                        <h4>{planet.name}</h4>
+                        <p>{planet.rotation_period}</p>
+                        <p>{planet.climate}</p>
+                        <p>{planet.terrain}</p>
+                        {/*  */}
+                    </div>
+
+
+                ) : <p>Loading...</p>
+            }
 
 
 
